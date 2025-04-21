@@ -17,8 +17,6 @@ function generateCartes() {
             
             // Couleur
             const familleColor = familles.find(f => f.id === c.famille)?.color || "#FFF";
-            console.log(familleColor)
-
             const carte = document.createElement("div");
             carte.className = "carte";
             carte.setAttribute("data-famille", c.famille);
@@ -125,7 +123,6 @@ function highlightFilters() {
         btn.classList.toggle("active", btn.getAttribute("data-id") === selectedFormation);
     });
 }
-
-generateFamilleFilters();
-generateFormationFilters();
-generateCartes();
+    generateFamilleFilters();
+    generateFormationFilters();
+    generateCartes();
