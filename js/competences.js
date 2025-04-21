@@ -1,4 +1,4 @@
-const competencesLink = competencesLink;
+const competencesLink = 'https://www.domaine.fr';
 const competences = [
     {
         "id": 1,
