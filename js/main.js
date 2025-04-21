@@ -17,8 +17,15 @@ function generateCartes() {
             
             // Couleur
             const familleColor = familles.find(f => f.id === c.famille)?.color || "#FFF";
+            const familleIcone = familles.find(f => f.id === c.famille)?.icone || "";
+            
+            const carteContainer = document.createElement("div");
+            carteContainer.className = "carte-container";
+
             const carte = document.createElement("div");
             carte.className = "carte";
+            carte.appendChild(carteContainer);
+            carte.style.backgroundImage = "url('assets/fonds/"+familleIcone+"')";
             carte.setAttribute("data-famille", c.famille);
             carte.setAttribute("data-formations", c.id_formations.join(","));
 
@@ -26,23 +33,26 @@ function generateCartes() {
             const titre = document.createElement("h3");
             titre.textContent = c.competence;
             titre.className = 'titre color'+familleColor
-            carte.appendChild(titre);
-
-            // Description
-            const description = document.createElement("p");
-            description.textContent = c.description;
-            carte.appendChild(description);
+            carteContainer.appendChild(titre);
 
             // Famille
             const familleDiv = document.createElement("div");
             const familleNom = familles.find(f => f.id === c.famille)?.nom || "Famille inconnue";
+            familleDiv.className = 'famille';
             familleDiv.textContent = `${familleNom}`;            
-            carte.appendChild(familleDiv);
+            carteContainer.appendChild(familleDiv);
 
-            // Famille Label
-            const familleLabel = document.createElement("strong");
-            familleLabel.textContent = "Famille : ";
-            familleDiv.prepend(familleLabel);
+            // Description
+            const description = document.createElement("p");
+            description.className = 'description';
+            description.textContent = c.description;
+            carteContainer.appendChild(description);
+
+
+            // // Famille Label
+            // const familleLabel = document.createElement("strong");
+            // familleLabel.textContent = "Famille : ";
+            // familleDiv.prepend(familleLabel);
 
             // Formations
             const formationsDiv = document.createElement("div");
@@ -54,15 +64,23 @@ function generateCartes() {
                     // badge.className = "badge";
                     badge.className = 'formation-badge';
                     const a = document.createElement("a");
-                    a.textContent = formationObj.tag;
+                    // a.textContent = formationObj.tag;
                     a.href = urlRNCP+formationObj.lien_rncp;
+                    a.title = formationObj.nom;
                     a.target = "_blank";
                     badge.appendChild(a);
+
+                    const badgeimg = document.createElement("img");
+                    badgeimg.className = 'formation-badgeimg';
+                    badgeimg.alt = formationObj.nom;
+                    badgeimg.src = "assets/icones/"+formationObj.icone+""
+
+                    a.prepend(badgeimg);
                     formationsDiv.appendChild(badge);
 
                 }
             });
-            carte.appendChild(formationsDiv);
+            carteContainer.appendChild(formationsDiv);
 
             // Sources
             const sourcesDiv = document.createElement("div");
@@ -78,7 +96,7 @@ function generateCartes() {
                 lien.textContent = "Lien";
                 sourcesDiv.appendChild(lien);
             });
-            carte.appendChild(sourcesDiv);
+            carteContainer.appendChild(sourcesDiv);
 
             container.appendChild(carte);
         }
